@@ -88,6 +88,30 @@ if has('nvim')
     highlight Normal guibg=none
 endif
 
+let is_wsl = 0
+let kernel_str = system("cat /proc/version")
+if kernel_str =~ "Linux" && (kernel_str =~ "microsoft" || kernel_str =~ "WSL2")
+    let is_wsl = 1
+endif
+
+if (is_wsl == 1)
+    " Rust clipboard program for 2-way clipboard transfer. program exists in $HOME/bin
+    "  https://github.com/equalsraf/win32yank
+    set clipboard+=unnamedplus
+    let g:clipboard = {
+    \   'name': 'win32yank-wsl',
+    \   'copy': {
+    \       '+': 'win32yank.exe -i --crlf',
+    \       '*': 'win32yank.exe -i --crlf',
+    \   },
+    \   'paste': {
+    \       '+': 'win32yank.exe -o --lf',
+    \       '*': 'win32yank.exe -o --lf',
+    \   },
+    \   'cache_enabled': 0,
+    \}
+endif
+
 " TODO: Try switching to ccls for lsp, since it at least tries to work with unity builds
 "  (https://github.com/clangd/clangd/issues/45#issuecomment-707260811)
 
@@ -95,29 +119,6 @@ lua << EOF
 local lspconfig = require'lspconfig'
 local onattach = require'completion'.on_attach
 local telescope = require'telescope'
-local treesitter_conf = require'nvim-treesitter.configs'
-
-local JDTLS_LOCATION = vim.fn.stdpath "data" .. "/lsp_servers/jdtls"
-
-treesitter_conf.setup {
-
-}
-
---lspconfig.clangd.setup {
---     on_attach = onattach,
---}
-
---lspconfig.ccls.setup {}
-
---lspconfig.pyls.setup { on_attach = onattach }
---lspconfig.rust_analyzer.setup { on_attach = onattach }
-
--- Disable inline buffer error messages, we want to enable them with a keybind
---vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
---    vim.lsp.diagnostic.on_publish_diagnostics, {
---        virtual_text = false 
---    }
---)
 
 telescope.setup {
     extensions = {

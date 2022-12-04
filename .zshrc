@@ -32,8 +32,20 @@ export EDITOR='nvim'
 kernel=$(cat /proc/version)
 if [[ $kernel =~ "microsoft" ]]
 then
-#sudo sh -c "echo :WindowsBatch:E::bat::/init: > /proc/sys/fs/binfmt_misc/register"
-#
+
+export PATH=$PATH:$HOME/bin
+
+# tmux seems to inherit the wrong enivroment if more than one session is running.
+#  We observe that in the second-created session, the WSL set enviroment variables
+#  from the terminal are not available in tmux.
+# We easily get around this by always starting a new tmux session on a *different*
+#  socket. Here are links tracking the bug:
+# https://github.com/microsoft/WSL/issues/8706#issuecomment-1211458435
+# https://bugs.x2go.org/cgi-bin/bugreport.cgi?bug=1591
+alias tmux="tmux -uL other"
+
+sudo sh -c "echo :WindowsBatch:E::bat::/init: > /proc/sys/fs/binfmt_misc/register" > /dev/null 2>&1
+
 # KeeAgent -- https://gist.github.com/strarsis/e533f4bca5ae158481bbe53185848d49
 . ~/wsl-ssh-agent-forwarder
 
