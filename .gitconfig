@@ -1,0 +1,8 @@
+[user]
+	email = jaxne@jaxne.xyz
+	name = jax2k
+[core]
+	editor = nvim
+[oh-my-zsh]
+	hide-dirty = 1
+	hide-status = 1
