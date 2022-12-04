@@ -1,7 +1,7 @@
 export LANG=en_US.UTF-8
 
 HISTFILE=~/.bash_history
-ZSH_THEME=jaxne
+ZSH_THEME=jax
 
 ENABLE_CORRECTION="true"
 DISABLE_UPDATE_PROMPT="true"
