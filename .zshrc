@@ -6,6 +6,11 @@ ZSH_THEME=jax
 ENABLE_CORRECTION="true"
 DISABLE_UPDATE_PROMPT="true"
 
+GIT_EDITOR="nvim"
+VISUAL="nvim"
+export GIT_EDITOR=nvim
+export VISUAL=nvim
+
 setopt noautomenu
 setopt nomenucomplete
 setopt nocorrectall

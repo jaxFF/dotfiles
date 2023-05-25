@@ -57,6 +57,9 @@ endif
 
 call plug#begin('~/.vim/bundle')
 
+Plug 'gruvbox-community/gruvbox'
+Plug 'aktersnurra/no-clown-fiesta.nvim'
+
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -75,7 +78,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'ziglang/zig.vim'
 Plug 'tikhomirov/vim-glsl'
-Plug 'gruvbox-community/gruvbox'
+
 Plug 'tomasiser/vim-code-dark'
 
 Plug 'mfussenegger/nvim-jdtls'
@@ -83,7 +86,8 @@ Plug 'mfussenegger/nvim-jdtls'
 call plug#end()
 
 if has('nvim')
-    colorscheme jax
+"    colorscheme jax
+    colorscheme no-clown-fiesta
     
     highlight Normal guibg=none
 endif
