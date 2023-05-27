@@ -129,13 +129,33 @@ telescope.setup {
         fzy_native = {
             override_generic_sorter = false,
             override_file_sorter = true,
-         }
+        },
+        file_browser = {
+            -- Use telescope-file_browser over netrw
+            hijack_netrw = true,
+        },
     }
 }
 
-telescope.load_extension('fzy_native')
-
+telescope.load_extension "fzy_native"
+telescope.load_extension "file_browser"
 EOF
+
+" autocmd VimLeave * :SaveSession
+
+" Use completion-nvim in every buffer
+"autocmd BufEnter * lua require'completion'.on_attach()
+
+function! GetGitStatus()
+    let revision = system('cd '.expand('%:p:h:S').' && git rev-parse --short HEAD 2>/dev/null | tr -d "\n"')
+    let branchname = system('cd '.expand('%:p:h:S').' && git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d "\n"')
+    if (strlen(revision) > 0) && (strlen(branchname) > 0)
+        let g:gitstatus = ' ' . branchname . '@' . revision . ' '
+    else 
+        let g:gitstatus = ' '
+    endif
+endfunc
+autocmd BufEnter,BufWritePost * call GetGitStatus()
 
 let $MYVIMRC = '~/.vimrc'
 let mapleader = " "
@@ -161,48 +181,42 @@ nnoremap <leader>- :vertical resize -5<CR>
 nnoremap <leader>vs :vsplit<CR>
 nnoremap <leader>hs :split<CR>
 
+" In normal, insert, or visual mode, these mappings move the respective line,
+"  or visual selection up, or down. (Alt+Up) or (Alt-k), and (Alt+Down or (Alt+j)
+nnoremap <A-k> :m.-2<CR>==
+nnoremap <A-j> :m.+<CR>==
+inoremap <A-k> <Esc>:m.-2<CR>==gi
+inoremap <A-j> <Esc>:m.+<CR>==gi
+vnoremap <A-k> :m'<-2<CR>gv=gv
+vnoremap <A-j> :m'>+<CR>gv=gv
+nnoremap <A-Up> :m.-2<CR>==
+nnoremap <A-Down> :m.+<CR>==
+inoremap <A-Up> <Esc>:m.-2<CR>==gi
+inoremap <A-Down> <Esc>:m.+<CR>==gi
+vnoremap <A-Up> :m'<-2<CR>gv=gv
+vnoremap <A-Down> :m'>+<CR>gv=gv
+
 nnoremap <C-n> :lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap <C-p> :lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap vld :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 nnoremap vd :lua vim.lsp.buf.definition()<CR>
 nnoremap vi :lua vim.lsp.buf.implementation()<CR>
 nnoremap vrr :lua vim.lsp.buf.references()<CR>
+
 nnoremap <leader>u :UndotreeToggle<CR>
+
 nnoremap <leader>ff :lua require('telescope.builtin').find_files()<CR>
 nnoremap <leader>fb :lua require('telescope.builtin').buffers()<CR>
 nnoremap <leader>fg :lua require('telescope.builtin').live_grep()<CR>
 
-"inoremap " ""<Esc>ha
-"inoremap ' ''<Esc>ha
-"inoremap ` ``<Esc>ha
-"inoremap ( ()<Esc>ha
-"inoremap { {}<Esc>ha
-"inoremap [ []<Esc>ha
-" Open braces and place cursor inside (O command)
-"inoremap {<CR> {<CR>}<Esc>O 
-
 inoremap <C-c> <Esc>
 
-" Exit terminal mode in nvim
+" Exit terminal mode
 tnoremap <Esc> <C-\><C-N>
 
 " Trigger nvim completion popup
-imap <Tab> <Plug>(completion_smart_tab)
-imap <S-Tab> <Plug>(completion_smart_s_tab)
-
-" Use completion-nvim in every buffer
-autocmd BufEnter * lua require'completion'.on_attach()
-
-function! GetGitStatus()
-    let revision = system('cd '.expand('%:p:h:S').' && git rev-parse --short HEAD 2>/dev/null | tr -d "\n"')
-    let branchname = system('cd '.expand('%:p:h:S').' && git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d "\n"')
-    if (strlen(revision) > 0) && (strlen(branchname) > 0)
-        let g:gitstatus = ' ' . branchname . '@' . revision . ' '
-    else 
-        let g:gitstatus = ' '
-    endif
-endfunc
-autocmd BufEnter,BufWritePost * call GetGitStatus()
+"imap <Tab> <Plug>(completion_smart_tab)
+"imap <S-Tab> <Plug>(completion_smart_s_tab)
 
 " When the cursor isn't moved by the time 'updatetime', execute checktime to check for file changes
 au CursorHold * checktime
