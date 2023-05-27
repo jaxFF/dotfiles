@@ -59,31 +59,29 @@ endif
 
 call plug#begin('~/.vim/bundle')
 
-Plug 'gruvbox-community/gruvbox'
-Plug 'aktersnurra/no-clown-fiesta.nvim'
-
+Plug 'rmagatti/auto-session'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
-" coc can suck my coc!
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'ycm-core/YouCompleteMe'
-
-Plug 'nvim-tree/nvimtree.lua'
-Plug 'rmagatti/auto-session'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
+Plug 'iamcco/markdown-preview.nvim'
+Plug 'tpope/vim-fugitive'
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'mbbill/undotree'
-Plug 'rust-lang/rust.vim'
+"Plug 'nvim-tree/nvimtree.lua'
+
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'ziglang/zig.vim'
+Plug 'chr4/nginx.vim'
+Plug 'rust-lang/rust.vim'
 Plug 'tikhomirov/vim-glsl'
-
-Plug 'tomasiser/vim-code-dark'
-
+Plug 'ziglang/zig.vim'
 Plug 'mfussenegger/nvim-jdtls'
+
+Plug 'gruvbox-community/gruvbox'
+Plug 'aktersnurra/no-clown-fiesta.nvim'
+Plug 'tomasiser/vim-code-dark'
 
 call plug#end()
 
