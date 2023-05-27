@@ -5,6 +5,7 @@ set belloff=all
 set tabstop=4 softtabstop=4
 set shiftwidth=4
 set expandtab
+set autoindent
 set smartindent
 set scrolloff=12 " 8 for 24inch, 12 for 27inch ish???
 set incsearch
@@ -27,7 +28,8 @@ set cinoptions=l1 " Align switch statements with case label
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
-set updatetime=50
+set updatetime=300 " 50
+set cmdheight=1
 
 set statusline=
 set statusline+=\ %f
@@ -99,9 +101,9 @@ if kernel_str =~ "Linux" && (kernel_str =~ "microsoft" || kernel_str =~ "WSL2")
 endif
 
 if (is_wsl == 1)
-    " Rust clipboard program for 2-way clipboard transfer. program exists in $HOME/bin
+    " Rust program for 2-way clipboard transfer
+    " program in ~/bin/win32yank.exe
     "  https://github.com/equalsraf/win32yank
-    set clipboard+=unnamedplus
     let g:clipboard = {
     \   'name': 'win32yank-wsl',
     \   'copy': {
@@ -121,7 +123,7 @@ endif
 
 lua << EOF
 local lspconfig = require'lspconfig'
-local onattach = require'completion'.on_attach
+--local onattach = require'completion'.on_attach
 local telescope = require'telescope'
 
 telescope.setup {
