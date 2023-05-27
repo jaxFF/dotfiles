@@ -139,6 +139,7 @@ EOF
 
 let $MYVIMRC = '~/.vimrc'
 let mapleader = " "
+echo "current leader key is <space> !~"
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
